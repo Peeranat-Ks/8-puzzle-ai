@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intuition vs. Discernment: Greedy vs. A* Search</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-color: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --success-color: #10b981;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--surface-color);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-color);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .math {
+            font-family: serif;
+            font-style: italic;
+            background-color: var(--code-bg);
+            padding: 0 0.3rem;
+            border-radius: 4px;
+        }
+
+        .highlight-box {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+
+        .matrix-box {
+            display: inline-block;
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            margin: 0.5rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Rubric Table styling */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 600px;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+            color: var(--secondary-color);
+            white-space: nowrap;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rubric-dimension {
+            font-weight: 600;
+            color: var(--primary-color);
+            width: 20%;
+        }
+
+        /* State cards */
+        .state-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .state-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .state-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .state-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .submission-box {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .submission-box h3 {
+            color: #166534;
+            margin-top: 0;
+        }
+
+        code {
+            font-family: var(--font-mono);
+            background-color: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: #db2777;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            .container {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            .state-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <p class="subtitle">IT 423 Artificial Intelligence - Research Assignment 01</p>
+        <h1>Intuition vs. Discernment</h1>
+        <p class="subtitle">A Comparative Study of Greedy and A* Search</p>
+    </header>
+
+    <section>
+        <h2>I. Research Overview</h2>
+        <p>The quest for Negentropy in AI often involves choosing between speed and optimality. In this small-scale research assignment, you will investigate how heuristic search algorithms behave when solving the 8-puzzle. You will compare the performance of <strong>Greedy Best-First Search</strong> (which relies purely on the heuristic <span class="math">h(n)</span>) and <strong>A* Search</strong> (which balances historical cost <span class="math">g(n)</span> with future hope <span class="math">h(n)</span>).</p>
+        
+        <div class="highlight-box">
+            <h3>Collaboration Requirement</h3>
+            <p>This is a <strong>group assignment</strong>. You must work in groups of 3 people to leverage your collective Multiple Intelligences (MQ). Success in this research depends on <strong>Interpersonal Intelligence</strong>—the ability to coordinate complex technical tasks and synthesize three distinct perspectives into a single, coherent analytical voice.</p>
+            <p><em>Note: You are required to use the Python template code provided on the LMS course platform to ensure a standardized experimental environment.</em></p>
+        </div>
+    </section>
+
+    <section>
+        <h2>II. Research Methodology & Technical Tasks</h2>
+        
+        <h3>Algorithm Implementation</h3>
+        <p>Implement the following search strategies within the provided template:</p>
+        <ul>
+            <li><strong>Greedy Best-First Search</strong>: Sorting the frontier by <span class="math">f(n) = h(n)</span>.</li>
+            <li><strong>A* Search</strong>: Sorting the frontier by <span class="math">f(n) = g(n) + h(n)</span>.</li>
+        </ul>
+
+        <h3>Heuristic Variables</h3>
+        <p>Run your experiments using the following two heuristics to observe how informativeness impacts node expansion:</p>
+        <ol>
+            <li><strong>Number of Misplaced Tiles</strong>: <span class="math">h_1(n) = count of tiles i where current(i) ≠ goal(i)</span>.</li>
+            <li><strong>Total Manhattan Distance</strong>: <span class="math">h_2(n) = Σ |x_i - x_goal| + |y_i - y_goal|</span>.</li>
+        </ol>
+
+        <h3>Data Collection</h3>
+        <p>Execute both algorithms using both heuristics on the Experimental Data Set. For each run, record:</p>
+        <ul>
+            <li><strong>Optimality</strong>: The total cost of the solution path (number of moves).</li>
+            <li><strong>Efficiency</strong>: The number of nodes expanded during the search.</li>
+            <li><strong>Stability</strong>: Whether the algorithm reached a solution or was trapped in a local maximum/cycle.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>III. Experimental Data Set</h2>
+        <p>Groups must use the following Goal State as the target configuration for all experiments:</p>
+        
+        <div style="text-align:center; margin: 2rem 0;">
+            <p style="font-weight:bold; margin-bottom:0.5rem">The Goal State</p>
+            <div class="matrix-box">
+                1  2  3<br>
+                4  5  6<br>
+                7  8  0
+            </div>
+            <p style="font-size:0.8rem; color: #64748b;">(0 represents the blank space)</p>
+        </div>
+
+        <h3>Initial States (Sorted by Increasing Entropy/Difficulty)</h3>
+        <div class="state-grid">
+            <div class="state-card">
+                <div class="state-name">State 1 (Very Easy)</div>
+                <div class="matrix-box">
+                    1  2  3<br>
+                    4  5  6<br>
+                    0  7  8
+                </div>
+            </div>
+            <div class="state-card">
+                <div class="state-name">State 2 (Easy)</div>
+                <div class="matrix-box">
+                    1  2  3<br>
+                    0  4  6<br>
+                    7  5  8
+                </div>
+            </div>
+            <div class="state-card">
+                <div class="state-name">State 3 (Moderate)</div>
+                <div class="matrix-box">
+                    4  1  2<br>
+                    7  0  3<br>
+                    8  5  6
+                </div>
+            </div>
+            <div class="state-card">
+                <div class="state-name">State 4 (Hard)</div>
+                <div class="matrix-box">
+                    2  3  5<br>
+                    1  0  4<br>
+                    7  8  6
+                </div>
+            </div>
+            <div class="state-card">
+                <div class="state-name">State 5 (Very Hard)</div>
+                <div class="matrix-box">
+                    0  5  2<br>
+                    1  8  3<br>
+                    4  7  6
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>IV. The Research Report (5D Reflection)</h2>
+        <p>Your report must be structured as a formal research paper (minimum 500 words). Follow these headers:</p>
+        
+        <ol>
+            <li><strong>Introduction</strong>: Define the problem, negentropy, and your hypothesis.</li>
+            <li><strong>Technical Methodology</strong>: PQ & MQ. Efficiency (Priority Queue optimization), Clarity (logic dialogue), and Robustness (error handling).</li>
+            <li><strong>Experimental Results & Visualizations</strong>: Tables and Charts comparing nodes expanded and path costs.</li>
+            <li><strong>The DPT Synthesis</strong>: Dual-Process Theory analysis. System 1 (Greedy) vs. System 2 (A*).</li>
+            <li><strong>Teamwork & MQ Contribution</strong>: Division of labor, synthesis of intelligences, and conflict resolution.</li>
+            <li><strong>Emotional & Stability Reflection</strong>: Debugging approach and emotional stability (EQ).</li>
+            <li><strong>Ethical & Spiritual Conclusion</strong>: Data integrity (SQ) and Heuristics as a spiritual compass.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>V. Comprehensive 5D Assessment Rubric</h2>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>Exemplary (4)</th>
+                        <th>Proficient (3)</th>
+                        <th>Developing (2)</th>
+                        <th>Beginning (1)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="rubric-dimension">Physical (PQ)<br>Code Negentropy</td>
+                        <td>Code is highly efficient, follows PEP8, and implements the priority queue with minimal memory overhead.</td>
+                        <td>Code is functional and clean. Follows most formatting standards.</td>
+                        <td>Code runs but contains redundant logic or digital clutter.</td>
+                        <td>Code is inefficient or fails to run due to syntax errors.</td>
+                    </tr>
+                    <tr>
+                        <td class="rubric-dimension">Spiritual (SQ)<br>Integrity & Order</td>
+                        <td>Research data is reported with absolute honesty. Heuristic logic perfectly reflects the goal of Restoration.</td>
+                        <td>Data is original and the implementation of heuristics is technically sound.</td>
+                        <td>Minor inconsistencies in data; heuristic calculation has logic flaws.</td>
+                        <td>Plagiarism detected or data appears fabricated to hide failures.</td>
+                    </tr>
+                    <tr>
+                        <td class="rubric-dimension">Emotional (EQ)<br>Resilience & Stability</td>
+                        <td>Evidence of robust error handling. The report describes a mature team approach to debugging System 1 failures.</td>
+                        <td>Handles common errors. Shows persistence during the testing phase.</td>
+                        <td>Code is fragile; report suggests a rushed or frustrated emotional state.</td>
+                        <td>No error handling; team gave up on implementing both versions.</td>
+                    </tr>
+                    <tr>
+                        <td class="rubric-dimension">Multiple (MQ)<br>Teamwork & Synthesis</td>
+                        <td>Seamless collaboration; roles are clearly defined; final report is a unified synthesis.</td>
+                        <td>Clear evidence of effective cooperation and shared technical labor.</td>
+                        <td>Collaboration is visible but disjointed; report feels like separate parts.</td>
+                        <td>Little evidence of group coordination; one member likely did most work.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="submission-box">
+        <h3>VI. Submission Instructions</h3>
+        <ul>
+            <li><strong>Source Code</strong>: Submit <code>IT423_Research1_Group[Number]_[MemberLastNames].py</code></li>
+            <li><strong>Research Report</strong>: Submit <code>IT423_Research1_Group[Number]_[MemberLastNames].pdf</code></li>
+            <li><strong>Deadline</strong>: Check the LMS for your specific section's due date.</li>
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>
