@@ -4,6 +4,7 @@ This document explains the search algorithms and heuristics implemented in the 8
 
 ## 1. Search Algorithms
 
+
 The project uses a generic `tree_search` framework that utilizes a `Fringe` (Priority Queue) to manage the frontier of unexplored nodes. The difference between the algorithms lies in how they prioritize nodes in the fringe.
 
 ### 1.1 Greedy Best-First Search

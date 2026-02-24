@@ -360,22 +360,20 @@ if __name__ == "__main__":
             continue
 
         selected_algorithms = []
-        if choice_state != 'A':
-            print("\nSelect Algorithm:")
-            for i, (name, _, heuristic) in enumerate(algorithms):
-                print(f"{i + 1}. {name} with {heuristic.__name__}")
-            print("A. Run All Algorithms on this state")
-            
-            choice_alg = input("Enter choice (1-4, A): ").strip().upper()
-            
-            if choice_alg == 'A':
-                selected_algorithms = algorithms
-            elif choice_alg.isdigit() and 1 <= int(choice_alg) <= len(algorithms):
-                selected_algorithms = [algorithms[int(choice_alg) - 1]]
-            else:
-                print("Invalid selection. Defaulting to All Algorithms.")
-                selected_algorithms = algorithms
+        
+        print("\nSelect Algorithm:")
+        for i, (name, _, heuristic) in enumerate(algorithms):
+            print(f"{i + 1}. {name} with {heuristic.__name__}")
+        print("A. Run All Algorithms")
+        
+        choice_alg = input("Enter choice (1-4, A): ").strip().upper()
+        
+        if choice_alg == 'A':
+            selected_algorithms = algorithms
+        elif choice_alg.isdigit() and 1 <= int(choice_alg) <= len(algorithms):
+            selected_algorithms = [algorithms[int(choice_alg) - 1]]
         else:
+            print("Invalid selection. Defaulting to All Algorithms.")
             selected_algorithms = algorithms
 
         print(f"\n{'State':<20} | {'Algorithm':<15} | {'Heuristic':<20} | {'Status':<8} | {'Cost':<5} | {'Expanded':<10} | {'Time (s)':<10}")
@@ -395,4 +393,12 @@ if __name__ == "__main__":
                 elapsed_time = end_time - start_time
                 
                 print(f"{state_name:<20} | {alg_name:<15} | {heuristic_name:<20} | {status:<8} | {cost:<5} | {expanded:<10} | {elapsed_time:.6f}")
+                
+                # Print Solution Path if user wants to observe
+                if path and len(path) > 0:
+                    print(f"Solution Path ({len(path)} steps): {path}")
+                else:
+                    print("No solution path found or empty.")
+
+                input("\nPress Enter to continue to next run...")
 
