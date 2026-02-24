@@ -17,10 +17,17 @@ The 8-puzzle problem consists of a 3x3 board containing numbered tiles from 1 to
     2.  A* Search is slower than GBFS but guarantees the most optimal solution. 
 
 ## 2. Technical Methodology (PQ - Code Negentropy & MQ - Logic Dialogue) - Morgan Phillip Matthew
-*(Summarize your implementation strategy. Describe how you optimized the Priority Queue and state representation to achieve minimal memory overhead. Explain how your code documentation creates a dialogue of logic. Detail the robust error handling mechanisms implemented.)*
+**Implementation Strategy & Efficiency (PQ Optimization)**
 
+Our implementation strategy centers on an object-oriented design using a generic tree_search framework that dynamically accepts different Fringe instances to seamlessly switch between Greedy and A* behaviors. To achieve code negentropy and minimal memory overhead, we optimized our Priority Queue by utilizing Python's built-in heapq module. Rather than pushing heavy, complex objects to the queue, the queue evaluates lightweight tuples formatted as (priority, id(node), node). The deliberate use of id(node) acts as an ultra-efficient tie-breaker; if two nodes share the same heuristic value, the queue relies on their unique memory addresses rather than expending computational overhead trying to compare the Node objects directly.
 
-[Write your methodology here...]
+Furthermore, we optimized our state representation by defining the 3x3 puzzle grid as a nested tuple of tuples (e.g., ((1, 2, 3), (4, 5, 6), (7, 8, 0))). Because tuples are immutable, they are inherently hashable, which allowed us to store previously visited states in an explored set. This approach minimizes memory consumption and enables $O(1)$ constant-time lookups during graph search validation.
+
+**Clarity (Logic Dialogue)**
+To ensure our codebase acts as a clear dialogue of logic, we integrated comprehensive docstrings and inline comments that articulate the reasoning behind our technical decisions. Rather than simply dictating what the code does, the documentation explains the why. For instance, inline comments explicitly map the theoretical Dual-Process concepts to the codebase, such as labeling the A* calculation with # A*: f(n) = g(n) + h(n) and highlighting our graph search filter with # Optimization: Graph search check. This transparent, readable narrative guides the reviewer effortlessly through the team's problem-solving process.
+
+**Robustness & Error Handling**
+To guarantee programmatic stability when navigating deep search trees and high-entropy initial states, we implemented robust structural protections. The primary mechanism is our graph search architecture; by checking the hashable state against the explored set before expanding a node, we strictly prevent the search agents from getting trapped in infinite loops or cyclical paths. Additionally, the main execution environment includes structural input validation. If a user provides an invalid selection for the initial state or algorithm choice, the system catches the error, prevents a fatal crash, and safely prompts the user to try again or falls back to a default execution state.
 
 ## 3. Experimental Results & Visualizations (MQ - Multimodal Clarity) - Adelaide
 ### Data Table
@@ -50,9 +57,11 @@ Executime time for each algorithms generally correlates with the number of nodes
 
 
 ## 4. The DPT Synthesis (Dual-Process Theory) - Morgan
-*(Analyze the behavior of your agents. Why does Greedy Search (System 1) often find a solution faster in simple landscapes but fail to find the shortest path? How does the $g(n)$ component in A* represent the Sanctified Discernment of System 2?)*
+In Dual-Process Theory, Greedy Best-First Search acts as System 1, relying entirely on intuition via the heuristic evaluation function $f(n) = h(n)$. In simple landscapes, this intuitive approach allows Greedy Search to rapidly find a solution because it makes locally optimal choices at each step to minimize the estimated distance to the goal. However, System 1 often fails to find the shortest path because it does not consider the cost of the path taken to reach the node. This lack of historical context makes it susceptible to "greedy traps," where it blindly follows a locally promising path that ultimately becomes a long, inefficient detour.
 
-[Write your DPT synthesis here...]
+Conversely, A* Search embodies System 2 thinking, representing deliberative discernment. The inclusion of the $g(n)$ component introduces the actual historical cost from the start node into the evaluation function $f(n) = g(n) + h(n)$. This $g(n)$ component acts as the "Sanctified Discernment" of System 2, providing a superior analytical guardrail over pure intuition. By balancing the historical cost to reach the node with the estimated future cost to the goal, A* systematically explores layers of the search space, ensuring it does not overlook a cheaper path and guaranteeing optimality.
+
+
 
 ## 5. Teamwork & MQ Contribution (Interpersonal Intelligence) - Adelaide
 *(Briefly describe the division of labor. How did the team synthesize three different Intelligences to overcome obstacles? Provide an example of a technical disagreement and how it was resolved through System 2 negotiation.)*
