@@ -6,8 +6,14 @@
 *   **Team Members:**
     1.  202200272 | Peeranat Kongsang
     2.  202300155 | Adelaide Silverline Francis
+<<<<<<< HEAD
     3.  202200154 | Matthew Philip Morgan
 *   **Date: 23 February 2026**
+=======
+    3.  202200xxx | Matthew Philip Morgan
+*   **Date:**
+    1
+>>>>>>> 0d38d484e6a1518a27c5ced40db501cbd86d0d1e
 
 ---
 
@@ -25,7 +31,7 @@ Hypothesis:
 
 [Write your methodology here...]
 
-## 3. Experimental Results & Visualizations (MQ - Multimodal Clarity)
+## 3. Experimental Results & Visualizations (MQ - Multimodal Clarity) - Adelaide
 *(Present your data through multiple lenses. Include a comprehensive table comparing result sets for all 5 test cases. Include charts/graphs comparing Nodes Expanded and Path Cost across the different algorithms and heuristics.)*
 
 ### Data Table
@@ -41,22 +47,22 @@ Hypothesis:
 ### Analysis
 [Write your analysis of the results here...]
 
-## 4. The DPT Synthesis (Dual-Process Theory)
+## 4. The DPT Synthesis (Dual-Process Theory) - Morgan
 *(Analyze the behavior of your agents. Why does Greedy Search (System 1) often find a solution faster in simple landscapes but fail to find the shortest path? How does the $g(n)$ component in A* represent the Sanctified Discernment of System 2?)*
 
 [Write your DPT synthesis here...]
 
-## 5. Teamwork & MQ Contribution (Interpersonal Intelligence)
+## 5. Teamwork & MQ Contribution (Interpersonal Intelligence) - Adelaide
 *(Briefly describe the division of labor. How did the team synthesize three different Intelligences to overcome obstacles? Provide an example of a technical disagreement and how it was resolved through System 2 negotiation.)*
 
 [Write your teamwork reflection here...]
 
-## 6. Emotional & Stability Reflection (EQ)
+## 6. Emotional & Stability Reflection (EQ) - Peeranat
 *(Describe your approach to debugging System 1 failures. How did the team maintain the emotional stability needed to handle complex shuffles or logical setbacks without compromising code quality?)*
 
 [Write your EQ reflection here...]
 
-## 7. Ethical & Spiritual Conclusion (SQ - Integrity & Order)
+## 7. Ethical & Spiritual Conclusion (SQ - Integrity & Order) - Peeranat
 *(Reflect on the integrity of your search. Confirm the absolute honesty of your reported data. Discuss how a Heuristic acts as a spiritual compass.)*
 
 [Write your conclusion here...]

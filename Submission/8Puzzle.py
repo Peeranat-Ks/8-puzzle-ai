@@ -336,21 +336,69 @@ if __name__ == "__main__":
         ("A* Search", AStarFringe, h1_misplaced_tiles),
         ("A* Search", AStarFringe, h2_manhattan_distance)
     ]
-    
-    print(f"{'State':<20} | {'Algorithm':<15} | {'Heuristic':<20} | {'Status':<8} | {'Cost':<5} | {'Expanded':<10} | {'Time (s)':<10}")
-    print("-" * 110)
 
-    for state_name, initial_state in configurations:
-        for alg_name, fringe_class, heuristic in algorithms:
-            # Setup Problem
-            problem = Problem(initial_state)
-            fringe = fringe_class(heuristic)
-            
-            start_time = time.time()
-            path, cost, expanded, status = tree_search(problem, fringe)
-            end_time = time.time()
-            
-            heuristic_name = heuristic.__name__
-            elapsed_time = end_time - start_time
-            
-            print(f"{state_name:<20} | {alg_name:<15} | {heuristic_name:<20} | {status:<8} | {cost:<5} | {expanded:<10} | {elapsed_time:.6f}")
+    while True:
+        print("\n--- 8-Puzzle Solver Menu ---")
+        print("Select Initial State:")
+        for i, (name, _) in enumerate(configurations):
+            print(f"{i + 1}. {name}")
+        print("A. Run All")
+        print("Q. Quit")
+        
+        choice_state = input("Enter choice (1-5, A, Q): ").strip().upper()
+        
+        if choice_state == 'Q':
+            break
+        
+        selected_states = []
+        if choice_state == 'A':
+            selected_states = configurations
+        elif choice_state.isdigit() and 1 <= int(choice_state) <= len(configurations):
+            selected_states = [configurations[int(choice_state) - 1]]
+        else:
+            print("Invalid selection. Please try again.")
+            continue
+
+        selected_algorithms = []
+        
+        print("\nSelect Algorithm:")
+        for i, (name, _, heuristic) in enumerate(algorithms):
+            print(f"{i + 1}. {name} with {heuristic.__name__}")
+        print("A. Run All Algorithms")
+        
+        choice_alg = input("Enter choice (1-4, A): ").strip().upper()
+        
+        if choice_alg == 'A':
+            selected_algorithms = algorithms
+        elif choice_alg.isdigit() and 1 <= int(choice_alg) <= len(algorithms):
+            selected_algorithms = [algorithms[int(choice_alg) - 1]]
+        else:
+            print("Invalid selection. Defaulting to All Algorithms.")
+            selected_algorithms = algorithms
+
+        print(f"\n{'State':<20} | {'Algorithm':<15} | {'Heuristic':<20} | {'Status':<8} | {'Cost':<5} | {'Expanded':<10} | {'Time (s)':<10}")
+        print("-" * 110)
+
+        for state_name, initial_state in selected_states:
+            for alg_name, fringe_class, heuristic in selected_algorithms:
+                # Setup Problem
+                problem = Problem(initial_state)
+                fringe = fringe_class(heuristic)
+                
+                start_time = time.time()
+                path, cost, expanded, status = tree_search(problem, fringe)
+                end_time = time.time()
+                
+                heuristic_name = heuristic.__name__
+                elapsed_time = end_time - start_time
+                
+                print(f"{state_name:<20} | {alg_name:<15} | {heuristic_name:<20} | {status:<8} | {cost:<5} | {expanded:<10} | {elapsed_time:.6f}")
+                
+                # Print Solution Path if user wants to observe
+                if path and len(path) > 0:
+                    print(f"Solution Path ({len(path)} steps): {path}")
+                else:
+                    print("No solution path found or empty.")
+
+                input("\nPress Enter to continue to next run...")
+
