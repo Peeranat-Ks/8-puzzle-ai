@@ -14,7 +14,6 @@ The 8-puzzle problem consists of a 3x3 board containing numbered tiles from 1 to
 
 Hypothesis: 
     1. Greedy Best-First Search (GBFS) is more efficient in comparison to A* but is not as optimal.
-
     2. A* Search is slower than GBFS but guarantees the most optimal solution. 
 
 ## 2. Technical Methodology (PQ - Code Negentropy & MQ - Logic Dialogue) - Morgan Phillip Matthew
