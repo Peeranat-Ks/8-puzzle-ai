@@ -6,16 +6,8 @@
 *   **Team Members:**
     1.  202200272 | Peeranat Kongsang
     2.  202300155 | Adelaide Silverline Francis
-<<<<<<< HEAD
     3.  202200154 | Matthew Philip Morgan
 *   **Date: 23 February 2026**
-=======
-    3.  202200xxx | Matthew Philip Morgan
-*   **Date:**
-    1
->>>>>>> 0d38d484e6a1518a27c5ced40db501cbd86d0d1e
-
----
 
 ## 1. Introduction
 The 8-puzzle problem consists of a 3x3 board containing numbered tiles from 1 to 8. The remaining tile is left empty thus allowing for adjacent movements (left, right, up, and down) to be made. Negentropy is established when the configured goal state has been achived, which is usually a sequential order of the tiles.  
