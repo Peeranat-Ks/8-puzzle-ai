@@ -69,14 +69,11 @@ Conversely, A* Search embodies System 2 thinking, representing deliberative disc
 [Write your teamwork reflection here...]
 
 ## 6. Emotional & Stability Reflection (EQ) - Peeranat
-*(Describe your approach to debugging System 1 failures. How did the team maintain the emotional stability needed to handle complex shuffles or logical setbacks without compromising code quality?)*
+### Reflection on Project Challenges
+This project taught us the importance of staying calm under pressure. When we saw that GBFS expanded 579 nodes in State 4, we were surprised and frustrated. However, instead of giving up, we took time to carefully examine what happened. By staying patient and analyzing the results step by step, we turned confusion into understanding. This experience shows that solving algorithm problems requires both strong technical skills and the ability to handle emotions well—accepting when things don't go as planned, staying curious about unexpected outcomes, and treating mistakes as chances to learn rather than signs of failure.
 
-[Write your EQ reflection here...]
 
 ## 7. Ethical & Spiritual Conclusion (SQ - Integrity & Order) - Peeranat
-*(Reflect on the integrity of your search. Confirm the absolute honesty of your reported data. Discuss how a Heuristic acts as a spiritual compass.)*
+Working on this project taught us a big lesson in humility. We learned that we cannot just trust what we think we know; we have to look for the truth in the results. For example, when our code ran much slower than expected (expanding 579 nodes), it was a moment to practice patience instead of frustration. This taught us to let go of our pride and our initial guesses. By waiting to see the full picture before judging, we practiced true discernment—seeing things as they really are, not just how we want them to be. This habit helps us grow not just as programmers, but as people who value truth over our own opinions.
 
-[Write your conclusion here...]
-
----
 **Statement of Integrity:** We confirm that the data reported in this document is original and collected honestly from our own algorithm implementations.
