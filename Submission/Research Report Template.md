@@ -6,18 +6,22 @@
 *   **Team Members:**
     1.  202200272 | Peeranat Kongsang
     2.  202300155 | Adelaide Silverline Francis
-    3.  202200xxx | Matthew Philip Morgan
-*   **Date:**
+    3.  202200154 | Matthew Philip Morgan
+*   **Date: 23 February 2026**
 
 ---
 
 ## 1. Introduction
-*(Define the 8-puzzle problem and the search for negentropy. State your hypothesis regarding the efficiency and optimality of Greedy vs. A* search across the provided dataset.)*
+The 8-puzzle problem consists of a 3x3 board containing numbered tiles from 1 to 8. The remaining tile is left empty thus allowing for adjacent movements (left, right, up, and down) to be made. Negentropy is established when the configured goal state has been achived, which is usually a sequential order of the tiles.  
 
-[Write your introduction here...]
+Hypothesis: 
+    1. Greedy Best-First Search (GBFS) is more efficient in comparison to A* but is not as optimal.
 
-## 2. Technical Methodology (PQ - Code Negentropy & MQ - Logic Dialogue)
+    2. A* Search is slower than GBFS but guarantees the most optimal solution. 
+
+## 2. Technical Methodology (PQ - Code Negentropy & MQ - Logic Dialogue) - Morgan Phillip Matthew
 *(Summarize your implementation strategy. Describe how you optimized the Priority Queue and state representation to achieve minimal memory overhead. Explain how your code documentation creates a dialogue of logic. Detail the robust error handling mechanisms implemented.)*
+
 
 [Write your methodology here...]
 
@@ -26,13 +30,13 @@
 
 ### Data Table
 
-| Initial State | Greedy ($h_1$) Cost | Greedy ($h_1$) Nodes | Greedy ($h_2$) Cost | Greedy ($h_2$) Nodes | A* ($h_1$) Cost | A* ($h_1$) Nodes | A* ($h_2$) Cost | A* ($h_2$) Nodes |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| State 1 (Very Easy) | | | | | | | | |
-| State 2 (Easy) | | | | | | | | |
-| State 3 (Moderate) | | | | | | | | |
-| State 4 (Hard) | | | | | | | | |
-| State 5 (Very Hard) | | | | | | | | |
+| Initial State | Greedy ($h_1$) Cost | Greedy ($h_1$) Nodes | Greedy ($h_1$) Time(us) | Greedy ($h_2$) Cost | Greedy ($h_2$) Nodes | Greedy ($h_2$) Time(us) | A* ($h_1$) Cost | A* ($h_1$) Nodes | A* ($h_1$) Time(us) | A* ($h_2$) Cost | A* ($h_2$) Nodes | A* ($h_2$) Time(us) | 
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | 
+| State 1 (Very Easy) | 2 | 3 | 138 | 2 | 3 | 132 | 2 | 3 | 127 | 2 | 3 | 112 | 
+| State 2 (Easy) | 3 | 4 | 181 | 3 | 4 | 176 | 3 | 4 | 134 | 3 | 4 | 207 |
+| State 3 (Moderate) | 8 | 9 | 295 | 8 | 9 | 319 | 8 | 9 | 283 | 8 | 9 | 250 | 
+| State 4 (Hard) | 8 | 579 | 4462 | 8 | 9 | 365 | 8 | 22 | 357 | 8 | 10 | 250 | 
+| State 5 (Very Hard) | 8 | 9 | 261 | 8 | 9 | 283 | 8 | 9 | 256 | 8 | 9 | 326 |
 
 ### Analysis
 [Write your analysis of the results here...]
